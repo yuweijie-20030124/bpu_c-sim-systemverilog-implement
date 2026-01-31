@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <cstddef>
 #include <vector>
-#include <unordered_map>
 
 /**
  * Branch Target Buffer (BTB)
