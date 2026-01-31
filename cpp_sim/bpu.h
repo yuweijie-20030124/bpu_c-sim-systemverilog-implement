@@ -69,17 +69,11 @@ public:
     void update(uint32_t pc, bool actually_taken, uint32_t actual_target) {
         size_t index = get_index(pc);
         
-        // Update 2-bit counter
-        counters[index].update(actually_taken);
-        
-        // Update BTB if branch was taken
-        if (actually_taken) {
-            btb.update(pc, actual_target);
-        }
+        // Get prediction before update for statistics
+        Prediction pred = predict(pc);
         
         // Update statistics
         predictions++;
-        Prediction pred = predict(pc);
         if (pred.taken == actually_taken) {
             correct_predictions++;
         }
@@ -87,6 +81,14 @@ public:
             btb_hits++;
         } else {
             btb_misses++;
+        }
+        
+        // Update 2-bit counter
+        counters[index].update(actually_taken);
+        
+        // Update BTB if branch was taken
+        if (actually_taken) {
+            btb.update(pc, actual_target);
         }
     }
     

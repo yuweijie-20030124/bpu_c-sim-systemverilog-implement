@@ -107,8 +107,8 @@ void test_bpu() {
     assert(pred.target_valid == true);  // BTB should have entry now
     assert(pred.target == target);
     
-    // Train counter to not taken
-    for (int i = 0; i < 3; i++) {
+    // Train counter to not taken (3 updates: 11->10->01->00)
+    for (int iter = 0; iter < 3; iter++) {
         bpu.update(pc, false, 0);
     }
     
